@@ -1,0 +1,20 @@
+{
+  "name": "ghana_administrative_divisions",
+  "version": "1.0.0",
+  "description": "database and csv export of administrative divisions in Ghana",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ghana",
+    "regions",
+    "districts"
+  ],
+  "author": "crazyabdul",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.7.2",
+    "sqlite3": "^5.0.0"
+  }
+}
