@@ -9,19 +9,14 @@
 
 //Import packages
 const sqlite3 = require('sqlite3');
+commands = require("./sql_commands")
+// import commands from './sql_commands'
 
 // create instance of database connection
-const db = new sqlite3.Database('./db.sqlite3');
+const db = new sqlite3.Database('./gh_admin.db');
 
 db.serialize (() => {
-    db.run ();
-
-    //CONSTRAINT regions_fk_capital_id FOREIGN KEY (capital_id)
-    //REFERENCES towns(id) ON UPDATE CASCADE ON DELETE NO ACTION
-
-    db.run("INSERT into regions VALUES (?,'Ashanti',?,?,?)")
-
-    db.each(`SELECT * FROM regions`, (err, row) => {
+    db.each(commands.regions, (err, row) => {
         if (err) {
             console.log(err);
             throw err;

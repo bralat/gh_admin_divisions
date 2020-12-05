@@ -9,6 +9,6 @@ To make changes to the sqlite db, you can use any of the available sqlite editor
 [SQLiteStudio](https://github.com/pawelsalawa/sqlitestudio)
 
 ### Contribution
-Calling all volunteers to help maintain this repo
+Calling all volunteers to help maintain this repo in the following ways
 1. Updating information in a timely manner
 2. adding necessary features to make it more dev friendly
