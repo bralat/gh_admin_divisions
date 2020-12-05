@@ -1,23 +1,28 @@
-/**
- * TODO: 
- * if tables don't exist, create them and populate with their respective csvs
- * refactor code
- * export data in csvs
- * test an sqlite client and add to readme
- * remove database seeding code
-*/
-
 //Import packages
 const sqlite3 = require('sqlite3');
 const fs = require('fs');
 const commands = require("./sql_commands")
-// import commands from './sql_commands'
+const { Parser } = require('json2csv');
 
-var start = function (table, cols, format) {
-    csv_data = ""
-    json_output = []
-    const db = new sqlite3.Database('./gh_admin.db');
-    
+function write_to_json (rows, table) {
+    output = JSON.stringify(rows, null, 2);
+    fs.writeFileSync(`./data/${table}.json`, output);
+}
+
+function write_to_csv (rows, table) {
+    const fields = Object.keys(rows[0])
+    const opts = { fields };
+
+    try {
+        const parser = new Parser(opts);
+        const output = parser.parse(rows);
+        fs.writeFileSync(`./data/${table}.csv`, output); 
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+function get_data (db, table, format) {
     db.all(commands[table], (err, rows) => {
         if (err) {
             console.log(err);
@@ -25,11 +30,35 @@ var start = function (table, cols, format) {
         }
 
         //write to disk
-        json_output = JSON.stringify(rows, null, 2);
-        fs.writeFileSync(`./data/${table}.json`, json_output);    
+        if (format == "json") {
+            write_to_json(rows, table)
+        } else if (format == "csv") {
+            write_to_csv(rows, table)
+        } else {
+            write_to_json(rows, table)
+            write_to_csv(rows, table)
+        }
     });
+}
+
+function start (table, cols, format) {
+    // create instance of db
+    const db = new sqlite3.Database('./db.sqlite3');
+
+    // get all table names
+    tables = Object.keys(commands)
+
+    // If user specified a table, then make it the only table in the loop
+    if (table) {
+        tables = [table]
+    }
+    
+    // process tables
+    for (table of tables) {
+        get_data (db, table, format)
+    }
 
     db.close()
 }
 
-start ('regions')
+start ()
