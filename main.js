@@ -9,22 +9,27 @@
 
 //Import packages
 const sqlite3 = require('sqlite3');
-commands = require("./sql_commands")
+const fs = require('fs');
+const commands = require("./sql_commands")
 // import commands from './sql_commands'
 
-// create instance of database connection
-const db = new sqlite3.Database('./gh_admin.db');
-
-db.serialize (() => {
-    db.each(commands.regions, (err, row) => {
+var start = function (table, cols, format) {
+    csv_data = ""
+    json_output = []
+    const db = new sqlite3.Database('./gh_admin.db');
+    
+    db.all(commands[table], (err, rows) => {
         if (err) {
             console.log(err);
             throw err;
         }
-        console.log(row);
-    }, () => {
-        console.log('query completed')
+
+        //write to disk
+        json_output = JSON.stringify(rows, null, 2);
+        fs.writeFileSync(`./data/${table}.json`, json_output);    
     });
 
     db.close()
-});
+}
+
+start ('regions')
