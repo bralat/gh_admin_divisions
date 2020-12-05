@@ -14,15 +14,7 @@ const sqlite3 = require('sqlite3');
 const db = new sqlite3.Database('./db.sqlite3');
 
 db.serialize (() => {
-    db.run (`
-        CREATE TABLE IF NOT EXISTS regions (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            capital_id INTEGER NULL,
-            minister TEXT NULL,
-            dep_minister TEXT NULL
-        )`
-    );
+    db.run ();
 
     //CONSTRAINT regions_fk_capital_id FOREIGN KEY (capital_id)
     //REFERENCES towns(id) ON UPDATE CASCADE ON DELETE NO ACTION
