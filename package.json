@@ -14,8 +14,8 @@
   "author": "crazyabdul",
   "license": "ISC",
   "dependencies": {
-    "bluebird": "^3.7.2",
     "json2csv": "^5.0.5",
+    "minimist": "^1.2.5",
     "sqlite3": "^5.0.0"
   }
 }

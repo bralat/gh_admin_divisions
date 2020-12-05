@@ -3,6 +3,7 @@ const sqlite3 = require('sqlite3');
 const fs = require('fs');
 const commands = require("./sql_commands")
 const { Parser } = require('json2csv');
+const args = require('minimist')(process.argv.slice(2))
 
 function write_to_json (rows, table) {
     output = JSON.stringify(rows, null, 2);
@@ -61,4 +62,8 @@ function start (table, cols, format) {
     db.close()
 }
 
-start ()
+start (
+    args.table || args.t,
+    args.columns || args.c,
+    args.format || args.f
+)
