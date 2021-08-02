@@ -1,7 +1,14 @@
-## Get started
+# Ghana Administrative Divisions
 
 This repo contains some data on the administrative levels of Ghana (Regions, MMDA and Towns) in a sqlite database, csv and json formats. 
 Please note that not all towns are captured in the data and there may be repitions in towns
+
+## Get started
+
+To install
+```
+npm install
+```
 
 For easy download, the csv and json data are provided. To regenerate the data, you can make use of the following commands
 
